@@ -18,7 +18,7 @@ class User(db.Model):
     
     profile = db.relationship('UserProfile', backref='user', uselist=False, cascade='all, delete-orphan')
     help_requests = db.relationship('HelpRequest', backref='requester', lazy='dynamic', cascade='all, delete-orphan')
-    volunteer_offers = db.relationship('VolunteerOffer', backref='volunteer', lazy='dynamic', foreign_keys='VolunteerOffer.volunteer_id')
+    volunteer_offers = db.relationship('VolunteerOffer', backref='volunteer_user', lazy='dynamic', foreign_keys='VolunteerOffer.volunteer_id')
     blacklisted_by = db.relationship('VolunteerBlacklist', backref='volunteer', foreign_keys='VolunteerBlacklist.volunteer_id')
     reviews_received = db.relationship('VolunteerReview', backref='volunteer', foreign_keys='VolunteerReview.volunteer_id')
     

@@ -1,8 +1,12 @@
 from app import create_app, db
 from app.models.user import User, UserProfile
 from app.models.request import HelpRequest, Category, VolunteerOffer
+from flask_cors import CORS
 
 app = create_app()
+
+# ✅ Allow frontend (React) to call Flask API
+CORS(app)
 
 @app.shell_context_processor
 def make_shell_context():
@@ -18,4 +22,5 @@ def make_shell_context():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=5000)
+    # ✅ Allow access from other ports/containers
+    app.run(host='mockfyp_mysql', debug=True, port=5000)

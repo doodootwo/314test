@@ -6,10 +6,33 @@ const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = (email, password, role) => {
-    setUser({ id: 1, email, role, username: email.split('@')[0] });
+  const login = async (email, password, role) => {
+  try {
+    const res = await fetch("http://127.0.0.1:5000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Login failed");
+    }
+
+    setUser({
+      id: data.user.id,
+      email: data.user.email,
+      username: data.user.email.split("@")[0],
+      role: data.user.role || role,
+    });
+
     return Promise.resolve();
-  };
+  } catch (err) {
+    alert(err.message);
+    return Promise.reject(err);
+  }
+};
 
   const register = (data) => {
     setUser({ id: 1, email: data.email, role: data.role, username: data.username });

@@ -17,7 +17,7 @@ def create_app(config_class='config.Config'):
     jwt.init_app(app)
     migrate.init_app(app, db)
     
-    # Register blueprints
+    # Register all blueprints
     from app.routes import auth, users, requests, volunteers, admin
     from app.routes import user_admin, pin, csr, system, password_recovery
     
@@ -31,5 +31,18 @@ def create_app(config_class='config.Config'):
     app.register_blueprint(csr.bp)
     app.register_blueprint(system.bp)
     app.register_blueprint(password_recovery.bp)
+    
+    CORS(app,
+        resources={
+            r"/*": {
+                "origins": ["http://localhost:5173", "http://127.0.0.1:5173"],
+                "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+                "allow_headers": ["Content-Type", "Authorization"],
+                "supports_credentials": True,
+                "expose_headers": ["Content-Type", "Authorization"],
+                "max_age": 600
+            }
+        }
+    )
     
     return app
