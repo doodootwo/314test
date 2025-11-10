@@ -19,10 +19,17 @@ def create_app(config_class='config.Config'):
     
     # Register blueprints
     from app.routes import auth, users, requests, volunteers, admin
+    from app.routes import user_admin, pin, csr, system, password_recovery
+    
     app.register_blueprint(auth.bp)
     app.register_blueprint(users.bp)
     app.register_blueprint(requests.bp)
     app.register_blueprint(volunteers.bp)
     app.register_blueprint(admin.bp)
+    app.register_blueprint(user_admin.bp)
+    app.register_blueprint(pin.bp)
+    app.register_blueprint(csr.bp)
+    app.register_blueprint(system.bp)
+    app.register_blueprint(password_recovery.bp)
     
     return app
