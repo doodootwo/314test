@@ -42,7 +42,7 @@ def update_user(user_id):
 @bp.route('/<int:user_id>', methods=['DELETE'])
 @jwt_required()
 def delete_user(user_id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())  # Convert back to int
     current_user = User.query.get(current_user_id)
     
     if current_user.role != 'admin':

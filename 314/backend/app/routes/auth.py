@@ -31,7 +31,7 @@ def register():
     db.session.add(user)
     db.session.commit()
     
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
     return jsonify({
         'message': 'User registered successfully',
         'access_token': access_token,
@@ -50,7 +50,7 @@ def login():
     if not user.is_active:
         return jsonify({'error': 'Account is deactivated'}), 403
     
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
     return jsonify({
         'access_token': access_token,
         'user': user.to_dict()
@@ -60,6 +60,6 @@ def login():
 @jwt_required()
 def get_current_user():
     print("Incoming headers: ", request.headers)
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())    
     user = User.query.get(user_id)
     return jsonify(user.to_dict()), 200
