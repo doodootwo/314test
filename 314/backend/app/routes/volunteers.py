@@ -14,13 +14,25 @@ def create_offer():
     offer = VolunteerOffer(
         request_id=data['request_id'],
         volunteer_id=user_id,
-        message=data.get('message', '')
+        message=data.get('message', ''),
+        status='accepted'
     )
     
-    db.session.add(offer)
+    existing_offer = VolunteerOffer.query.filter_by(
+        request_id=offer.request_id,
+        volunteer_id=user_id
+    ).first()
+
+    if existing_offer:
+        existing_offer.status = offer.status
+        existing_offer.message = offer.message
+        saved_offer = existing_offer
+    else:
+        db.session.add(offer)
+        saved_offer = offer
+
     db.session.commit()
-    
-    return jsonify(offer.to_dict()), 201
+    return jsonify(saved_offer.to_dict()), 201
 
 @bp.route('/offers/<int:offer_id>/withdraw', methods=['PUT'])
 @jwt_required()

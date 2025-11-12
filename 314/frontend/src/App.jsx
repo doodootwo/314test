@@ -573,6 +573,7 @@ const Dashboard = () => {
             <Search className="inline h-5 w-5 mr-2" />
             Browse Requests
           </button>
+
           {user.role === 'pin' && (
             <>
             <button
@@ -595,6 +596,7 @@ const Dashboard = () => {
             </button>
           </>
         )}
+
           {user.role === 'csr' && (
             <button
               onClick={() => setActiveTab('accepted-tasks')}
@@ -606,6 +608,7 @@ const Dashboard = () => {
               My Tasks
             </button>
           )}
+          
           {user.role === 'admin' && (
             <button
               onClick={() => setActiveTab('admin')}
@@ -669,7 +672,6 @@ const Dashboard = () => {
                       <option value="low">Low Urgency</option>
                       <option value="medium">Medium Urgency</option>
                       <option value="high">High Urgency</option>
-                      <option value="urgent">Urgent</option>
                     </select>
                   </div>
                   <div className="flex space-x-4">
