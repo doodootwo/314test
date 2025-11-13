@@ -168,6 +168,7 @@ const LoginPage = ({ onSwitch, onForgotPassword }) => {
           <p>Admin: admin@mockfyp.com / admin123</p>
           <p>PIN: john@mockfyp.com / password123</p>
           <p>CSR: volunteer@company.com / password123</p>
+          <p>Manager: manager@mockfyp.com / manager123</p>
         </div>
       </div>
     </div>
